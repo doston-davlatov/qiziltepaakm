@@ -64,6 +64,8 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/notifications.css">
 
     <!-- Swiper CSS -->
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
@@ -74,73 +76,91 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
     <style>
         body {
             font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
         }
 
-        /* Moved other styles to styles.css for maintainability */
-        .mobile-menu {
-            max-height: 0;
+        /* Viewport height fix for mobile */
+        :root {
+            --vh: 1vh;
+        }
+
+        .min-h-screen {
+            min-height: 100vh;
+            min-height: calc(var(--vh, 1vh) * 100);
+        }
+
+        /* Line clamp utility */
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
             overflow: hidden;
-            transition: max-height 0.3s ease-out;
         }
 
-        .mobile-menu.show {
-            max-height: 1000px;
-            transition: max-height 0.5s ease-in;
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
     </style>
 </head>
-<body class="bg-light">
+
+<body class="bg-light overflow-x-hidden">
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
-        <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light navbar-modern">
+        <div class="container-fluid">
             <!-- Logo -->
             <a class="navbar-brand d-flex align-items-center" href="index.php" aria-label="<?php echo htmlspecialchars(translate('library_name')); ?>">
-                <img src="images/logo_2.png" alt="<?php echo htmlspecialchars(translate('library_name')); ?> Logo" class="h-12 me-2">
+                <img src="images/logo_2.png" alt="<?php echo htmlspecialchars(translate('library_name')); ?> Logo" 
+                     style="height: 3rem;" class="me-2">
                 <span class="fs-5 fw-bold text-dark"><?php echo htmlspecialchars(translate('library_name')); ?></span>
             </a>
 
             <!-- Mobile menu button -->
-            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler border-0 mobile-menu-toggle d-lg-none" type="button" aria-label="Toggle navigation">
                 <i class="fas fa-bars fs-4"></i>
             </button>
 
             <!-- Desktop menu -->
             <div class="collapse navbar-collapse" id="navbarContent">
-                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0 hidden-mobile">
                     <!-- Home -->
                     <li class="nav-item">
-                        <a href="index.php" class="nav-link nav-link-custom px-3 <?php echo $currentPage === 'index' ? 'active' : ''; ?>" aria-current="<?php echo $currentPage === 'index' ? 'page' : ''; ?>">
+                        <a href="index.php" class="nav-link px-3 <?php echo $currentPage === 'index' ? 'active' : ''; ?>">
                             <?php echo htmlspecialchars(translate('home')); ?>
                         </a>
                     </li>
 
                     <!-- Catalog -->
                     <li class="nav-item">
-                        <a href="catalog.php" class="nav-link nav-link-custom px-3 <?php echo $currentPage === 'books' ? 'active' : ''; ?>" aria-current="<?php echo $currentPage === 'books' ? 'page' : ''; ?>">
+                        <a href="catalog.php" class="nav-link px-3 <?php echo $currentPage === 'catalog' ? 'active' : ''; ?>">
                             <?php echo htmlspecialchars(translate('catalog')); ?>
                         </a>
                     </li>
 
                     <!-- News -->
                     <li class="nav-item">
-                        <a href="news.php" class="nav-link nav-link-custom px-3 <?php echo $currentPage === 'news' ? 'active' : ''; ?>" aria-current="<?php echo $currentPage === 'news' ? 'page' : ''; ?>">
+                        <a href="news.php" class="nav-link px-3 <?php echo $currentPage === 'news' ? 'active' : ''; ?>">
                             <?php echo htmlspecialchars(translate('news')); ?>
                         </a>
                     </li>
 
                     <!-- Events -->
                     <li class="nav-item">
-                        <a href="events.php" class="nav-link nav-link-custom px-3 <?php echo $currentPage === 'events' ? 'active' : ''; ?>" aria-current="<?php echo $currentPage === 'events' ? 'page' : ''; ?>">
+                        <a href="events.php" class="nav-link px-3 <?php echo $currentPage === 'events' ? 'active' : ''; ?>">
                             <?php echo htmlspecialchars(translate('events')); ?>
                         </a>
                     </li>
 
                     <!-- Services Dropdown -->
                     <li class="nav-item dropdown position-static">
-                        <a class="nav-link nav-link-custom px-3 dropdown-toggle" href="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link px-3 dropdown-toggle" href="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown">
                             <?php echo htmlspecialchars(translate('services')); ?>
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-custom border-0 shadow mt-0 w-100" aria-labelledby="servicesDropdown">
+                        <ul class="dropdown-menu border-0 shadow mt-0" aria-labelledby="servicesDropdown">
                             <li><a class="dropdown-item py-2" href="services.php"><?php echo htmlspecialchars(translate('all_services')); ?></a></li>
                             <li><a class="dropdown-item py-2" href="virtual-tour.php"><?php echo htmlspecialchars(translate('virtual_tour')); ?></a></li>
                             <li><a class="dropdown-item py-2" href="online-services.php"><?php echo htmlspecialchars(translate('online_services')); ?></a></li>
@@ -150,10 +170,10 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
 
                     <!-- About Dropdown -->
                     <li class="nav-item dropdown position-static">
-                        <a class="nav-link nav-link-custom px-3 dropdown-toggle" href="#" id="aboutDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link px-3 dropdown-toggle" href="#" id="aboutDropdown" role="button" data-bs-toggle="dropdown">
                             <?php echo htmlspecialchars(translate('about')); ?>
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-custom border-0 shadow mt-0 w-100" aria-labelledby="aboutDropdown">
+                        <ul class="dropdown-menu border-0 shadow mt-0" aria-labelledby="aboutDropdown">
                             <li><a class="dropdown-item py-2" href="about.php"><?php echo htmlspecialchars(translate('about_library')); ?></a></li>
                             <li><a class="dropdown-item py-2" href="history.php"><?php echo htmlspecialchars(translate('history')); ?></a></li>
                             <li><a class="dropdown-item py-2" href="management.php"><?php echo htmlspecialchars(translate('management')); ?></a></li>
@@ -163,7 +183,7 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
 
                     <!-- Contact -->
                     <li class="nav-item">
-                        <a href="contact.php" class="nav-link nav-link-custom px-3 <?php echo $currentPage === 'contact' ? 'active' : ''; ?>" aria-current="<?php echo $currentPage === 'contact' ? 'page' : ''; ?>">
+                        <a href="contact.php" class="nav-link px-3 <?php echo $currentPage === 'contact' ? 'active' : ''; ?>">
                             <?php echo htmlspecialchars(translate('contact')); ?>
                         </a>
                     </li>
@@ -173,7 +193,7 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
                 <div class="d-flex align-items-center ms-auto">
                     <!-- Language Selector -->
                     <div class="me-3">
-                        <select onchange="changeLanguage(this.value)" class="form-select form-select-sm" aria-label="Select language">
+                        <select onchange="changeLanguage(this.value)" class="form-select form-select-sm language-selector">
                             <option value="uz" <?php echo $currentLang === 'uz' ? 'selected' : ''; ?>>O'zbekcha</option>
                             <option value="en" <?php echo $currentLang === 'en' ? 'selected' : ''; ?>>English</option>
                             <option value="ru" <?php echo $currentLang === 'ru' ? 'selected' : ''; ?>>Русский</option>
@@ -186,7 +206,7 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
                             <a class="nav-link dropdown-toggle p-0" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="User menu">
                                 <i class="fas fa-user-circle fs-4 text-secondary"></i>
                             </a>
-                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-custom border-0 shadow" aria-labelledby="userDropdown">
+                            <ul class="dropdown-menu dropdown-menu-end border-0 shadow" aria-labelledby="userDropdown">
                                 <li><a class="dropdown-item py-2" href="profile.php"><i class="fas fa-user me-2"></i><?php echo htmlspecialchars(translate('profile')); ?></a></li>
                                 <?php if (function_exists('isAdmin') && isAdmin()): ?>
                                     <li><a class="dropdown-item py-2" href="admin/"><i class="fas fa-cogs me-2"></i><?php echo htmlspecialchars(translate('admin_panel')); ?></a></li>
@@ -203,86 +223,79 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
         </div>
     </nav>
 
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-overlay"></div>
+    
     <!-- Mobile Menu -->
-    <div class="mobile-menu bg-white shadow-sm" id="mobileMenu">
-        <div class="container py-2">
-            <ul class="nav flex-column">
+    <div class="mobile-menu visible-mobile">
+        <div class="p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <span class="fw-bold"><?php echo htmlspecialchars(translate('library_name')); ?></span>
+                <button class="btn btn-link mobile-menu-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <ul class="nav flex-column space-y-modern">
                 <li class="nav-item">
-                    <a href="index.php" class="nav-link px-3 py-2 <?php echo $currentPage === 'index' ? 'active' : ''; ?>" aria-current="<?php echo $currentPage === 'index' ? 'page' : ''; ?>">
+                    <a href="index.php" class="nav-link px-3 py-2 <?php echo $currentPage === 'index' ? 'active' : ''; ?>">
                         <?php echo htmlspecialchars(translate('home')); ?>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="catalog.php" class="nav-link px-3 py-2 <?php echo $currentPage === 'books' ? 'active' : ''; ?>" aria-current="<?php echo $currentPage === 'books' ? 'page' : ''; ?>">
+                    <a href="catalog.php" class="nav-link px-3 py-2 <?php echo $currentPage === 'catalog' ? 'active' : ''; ?>">
                         <?php echo htmlspecialchars(translate('catalog')); ?>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="news.php" class="nav-link px-3 py-2 <?php echo $currentPage === 'news' ? 'active' : ''; ?>" aria-current="<?php echo $currentPage === 'news' ? 'page' : ''; ?>">
+                    <a href="news.php" class="nav-link px-3 py-2 <?php echo $currentPage === 'news' ? 'active' : ''; ?>">
                         <?php echo htmlspecialchars(translate('news')); ?>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="events.php" class="nav-link px-3 py-2 <?php echo $currentPage === 'events' ? 'active' : ''; ?>" aria-current="<?php echo $currentPage === 'events' ? 'page' : ''; ?>">
+                    <a href="events.php" class="nav-link px-3 py-2 <?php echo $currentPage === 'events' ? 'active' : ''; ?>">
                         <?php echo htmlspecialchars(translate('events')); ?>
                     </a>
                 </li>
-                <!-- Services Dropdown -->
                 <li class="nav-item">
-                    <a class="nav-link px-3 py-2 d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#mobileServices" role="button" aria-expanded="false" aria-controls="mobileServices">
+                    <a href="services.php" class="nav-link px-3 py-2">
                         <?php echo htmlspecialchars(translate('services')); ?>
-                        <i class="fas fa-chevron-down fs-6"></i>
                     </a>
-                    <div class="collapse ps-3" id="mobileServices">
-                        <ul class="nav flex-column">
-                            <li class="nav-item"><a href="services.php" class="nav-link px-3 py-2"><?php echo htmlspecialchars(translate('all_services')); ?></a></li>
-                            <li class="nav-item"><a href="virtual-tour.php" class="nav-link px-3 py-2"><?php echo htmlspecialchars(translate('virtual_tour')); ?></a></li>
-                            <li class="nav-item"><a href="online-services.php" class="nav-link px-3 py-2"><?php echo htmlspecialchars(translate('online_services')); ?></a></li>
-                            <li class="nav-item"><a href="rules.php" class="nav-link px-3 py-2"><?php echo htmlspecialchars(translate('rules')); ?></a></li>
-                        </ul>
-                    </div>
                 </li>
-                <!-- About Dropdown -->
                 <li class="nav-item">
-                    <a class="nav-link px-3 py-2 d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#mobileAbout" role="button" aria-expanded="false" aria-controls="mobileAbout">
+                    <a href="about.php" class="nav-link px-3 py-2">
                         <?php echo htmlspecialchars(translate('about')); ?>
-                        <i class="fas fa-chevron-down fs-6"></i>
                     </a>
-                    <div class="collapse ps-3" id="mobileAbout">
-                        <ul class="nav flex-column">
-                            <li class="nav-item"><a href="about.php" class="nav-link px-3 py-2"><?php echo htmlspecialchars(translate('about_library')); ?></a></li>
-                            <li class="nav-item"><a href="history.php" class="nav-link px-3 py-2"><?php echo htmlspecialchars(translate('history')); ?></a></li>
-                            <li class="nav-item"><a href="management.php" class="nav-link px-3 py-2"><?php echo htmlspecialchars(translate('management')); ?></a></li>
-                            <li class="nav-item"><a href="structure.php" class="nav-link px-3 py-2"><?php echo htmlspecialchars(translate('structure')); ?></a></li>
-                        </ul>
-                    </div>
                 </li>
                 <li class="nav-item">
-                    <a href="contact.php" class="nav-link px-3 py-2 <?php echo $currentPage === 'contact' ? 'active' : ''; ?>" aria-current="<?php echo $currentPage === 'contact' ? 'page' : ''; ?>">
+                    <a href="contact.php" class="nav-link px-3 py-2 <?php echo $currentPage === 'contact' ? 'active' : ''; ?>">
                         <?php echo htmlspecialchars(translate('contact')); ?>
                     </a>
                 </li>
             </ul>
-            <div class="d-flex justify-content-between align-items-center mt-3 px-3 py-2 border-top">
-                <select onchange="changeLanguage(this.value)" class="form-select form-select-sm w-auto" aria-label="Select language for mobile">
+            
+            <div class="mt-4 pt-4 border-top">
+                <select onchange="changeLanguage(this.value)" class="form-select form-select-sm mb-3 language-selector">
                     <option value="uz" <?php echo $currentLang === 'uz' ? 'selected' : ''; ?>>O'zbekcha</option>
                     <option value="en" <?php echo $currentLang === 'en' ? 'selected' : ''; ?>>English</option>
                     <option value="ru" <?php echo $currentLang === 'ru' ? 'selected' : ''; ?>>Русский</option>
                 </select>
+                
                 <?php if (function_exists('isLoggedIn') && isLoggedIn()): ?>
-                    <a href="profile.php" class="btn btn-outline-secondary btn-sm ms-2">
-                        <i class="fas fa-user-circle me-1"></i> <?php echo htmlspecialchars(translate('profile')); ?>
+                    <a href="profile.php" class="btn btn-outline-secondary btn-sm w-100">
+                        <i class="fas fa-user-circle me-1"></i><?php echo htmlspecialchars(translate('profile')); ?>
                     </a>
                 <?php else: ?>
-                    <a href="login.php" class="btn btn-primary btn-sm ms-2"><?php echo htmlspecialchars(translate('login')); ?></a>
+                    <a href="login.php" class="btn btn-primary btn-sm w-100"><?php echo htmlspecialchars(translate('login')); ?></a>
                 <?php endif; ?>
             </div>
         </div>
     </div>
 
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" integrity="sha384-yA3Ax2C+1B5Yk+1B5Yk+1B5Yk+1B5Yk+1B5Yk+1B5Yk+1B5Yk+1B5Yk+1B5Yk+1" crossorigin="anonymous"></script>
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    
     <script>
         // Language change function
         function changeLanguage(lang) {
@@ -291,11 +304,30 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
             }
         }
 
-        // Mobile menu toggle
-        document.querySelector('.navbar-toggler').addEventListener('click', function () {
-            const mobileMenu = document.getElementById('mobileMenu');
-            mobileMenu.classList.toggle('show');
+        // Fix viewport height for mobile
+        function setViewportHeight() {
+            const vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
+        
+        setViewportHeight();
+        window.addEventListener('resize', setViewportHeight);
+        
+        // Mobile menu functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileToggle = document.querySelector('.mobile-menu-toggle');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const mobileOverlay = document.querySelector('.mobile-overlay');
+            const mobileClose = document.querySelector('.mobile-menu-close');
+            
+            function toggleMobileMenu() {
+                mobileMenu.classList.toggle('active');
+                mobileOverlay.classList.toggle('active');
+                document.body.classList.toggle('menu-open');
+            }
+            
+            mobileToggle?.addEventListener('click', toggleMobileMenu);
+            mobileClose?.addEventListener('click', toggleMobileMenu);
+            mobileOverlay?.addEventListener('click', toggleMobileMenu);
         });
     </script>
-</body>
-</html>

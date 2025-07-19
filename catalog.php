@@ -6,7 +6,7 @@ $search = $_GET['search'] ?? '';
 $genre_id = $_GET['genre_id'] ?? '';
 $author_id = $_GET['author_id'] ?? '';
 $page = max(1, $_GET['page'] ?? 1);
-$per_page = 12;
+$per_page = 6; // Changed to 6 books per page
 
 // Build query
 $where_conditions = ['b.is_available = 1'];
