@@ -1,0 +1,53 @@
+/* Hero section uchun maxsus stillar */
+.hero-gradient {
+    background: linear-gradient(135deg, rgba(30, 58, 138, 0.2) 0%, rgba(30, 64, 175, 0.4) 100%) !important;
+}
+
+/* Katta tugmalar uchun stillar */
+.btn-primary-lg {
+    @apply inline-flex items-center justify-center bg-yellow-500 hover:bg-yellow-600 text-white font-semibold px-8 py-4 rounded-lg transition-all duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-xl;
+}
+
+.btn-secondary-lg {
+    @apply inline-flex items-center justify-center bg-transparent border-2 border-white hover:bg-white/20 text-white font-semibold px-8 py-4 rounded-lg transition-all duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-xl;
+}
+
+/* Bounce animation for scroll indicator */
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0) translateX(-50%);
+    }
+    40% {
+        transform: translateY(-15px) translateX(-50%);
+    }
+    60% {
+        transform: translateY(-7px) translateX(-50%);
+    }
+}
+
+.animate-bounce {
+    animation: bounce 2s infinite;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+    .hero-section {
+        min-height: 500px;
+    }
+    .hero-content {
+        padding-top: 80px;
+        padding-bottom: 80px;
+    }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+    .hero-section {
+        min-height: 600px;
+    }
+}
+
+@media (min-width: 1025px) {
+    .hero-section {
+        min-height: 700px;
+    }
+}

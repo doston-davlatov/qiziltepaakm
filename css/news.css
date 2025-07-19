@@ -1,0 +1,49 @@
+.featured-news-slider {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.featured-news-slider .swiper-slide {
+    display: flex;
+    justify-content: center;
+}
+
+.featured-news-slider .swiper-slide article {
+    width: 100%;
+    max-width: 600px; /* Adjust as needed for your design */
+}
+
+.featured-news-slider img {
+    height: 16rem; /* Uniform height for all images (256px) */
+    width: 100%;
+    object-fit: cover;
+}
+
+/* Pagination and Navigation Styling */
+.swiper-pagination-bullet {
+    background: #1e40af; /* Blue color for bullets */
+    opacity: 0.5;
+}
+
+.swiper-pagination-bullet-active {
+    opacity: 1;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+    color: #1e40af; /* Blue color for arrows */
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.swiper-button-prev:after,
+.swiper-button-next:after {
+    font-size: 20px;
+}
